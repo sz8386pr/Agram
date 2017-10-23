@@ -5,13 +5,15 @@ import java.util.Collections;
 
 public class Deck {
 
-    public ArrayList<Card> getCards() {
-        return cards;
-    }
+    public ArrayList<Card> getCards() { return cards; }
 
     private ArrayList<Card> cards;
 
     private static int index = -1;
+
+    public static String[] getSuits() { return suits; }
+
+    public static int[] getValues() { return values; }
 
     final static String[] suits = {"Hearts", "Cloves", "Diamonds", "Spades"};
    // final static String[] values = {"ACE", "3", "4", "5", "6", "7", "8", "9", "10"};

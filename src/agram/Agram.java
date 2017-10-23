@@ -1,3 +1,29 @@
+/*
+Agram Rules
+
+THE PACK
+The kings, queens, jacks, the 2s of all suits and the ace of spades are removed from the deck. The cards of each suit rank,
+from high to low: A, 10, 9, 8, 7, 6, 5, 4, 3. Because the ace of spades (called "Chief"') is removed from the deck,
+the highest card in the spade suit is the 10.
+
+THE DEAL
+The dealer will deal six cards to each player, three at a time.
+
+THE PLAY
+The player to the left of the dealer leads with a card of their choice. The next player to the left then follows with their card.
+If possible they must follow suit. However, if they cannot, they may play a card of any suit.
+If the card played does not belong to the original suit, it has no value. After all players have played their card,
+the player who has the highest card of the original suit (suit of the leading card of the round) wins the trick.
+
+The winner of the trick leads any card from his hand to begin the next trick, playing it face up on top of the pile.
+Once again, the other players must each play a card of the same suit as the card that was led, if possible.
+Otherwise they may play any card.
+
+This continues until six tricks have been played. Whoever wins the sixth and last trick wins the game.
+
+ */
+
+
 package agram;
 
 import java.util.ArrayList;
@@ -14,6 +40,7 @@ public class Agram {
     Deck deck;
     Card cards;
     Boolean gameOver = true;
+    int trick = 1;
 
     public static void main(String[] args) {
         new Agram().game();
@@ -25,6 +52,7 @@ public class Agram {
         while (gameOver) {
             playerTurn();
             //PCTurn();
+            trick++;
         }
 
 
@@ -71,30 +99,81 @@ public class Agram {
 
     private void playerTurn(){
 
+
         // Set the player to the user
         player = players.get(0);
+        int choice = 0;
 
-        System.out.println();
-        player.playerHand(); // Player hand status
-        System.out.println();
-        System.out.println("Select a card to play: ");
-        int choice = input.nextInt();
+        System.out.println("\nTrick #" + trick);
 
-        while (choice < 1 || choice > player.getHandSize()) {
-            System.out.println("Enter a number between 1 to " + player.getHandSize());
-            choice = input.nextInt();
+        player.playerHand();
+        System.out.println();// Player hand status
+
+        // Checks if card is in play in current trick
+        if (table.size() > trick-1) {
+            String playSuit = table.get(trick - 1).getSuit();
+            System.out.println(playSuit + " is in play");
+
+            Boolean cardSelected = true;
+
+            // Checks if player has the same suit as the play card
+            for (int x = 0; x < player.getHandSize(); x++) {
+                String handSuit = player.hand.get(x).getSuit();
+
+                // If user has any cards with the same suit as that of the current playing card, user must follow suit
+                if (handSuit.contains(playSuit)) {
+                    System.out.println("You have " + playSuit + " in your hands. You must play " + playSuit + " cards.");
+
+                    System.out.println("Select a card to play: ");
+                    choice = input.nextInt();
+
+                    // If user has picked numbers outside of the range or has picked a different suit card
+                    while (choice < 1 || choice > player.getHandSize() || !player.hand.get(choice).getSuit().contains(playSuit)) {
+                        if (!player.hand.get(choice).getSuit().contains(playSuit)) {
+                            System.out.println("You have " + playSuit + " in your hands. You must play " + playSuit + " cards.");
+                        } else {
+                            System.out.println("Enter a number between 1 to " + player.getHandSize());
+                        }
+                        choice = input.nextInt();
+                    }
+
+                    cardSelected = false;
+                    break;
+                }
+            }
+
+            // If user has no cards of the same suit as the playing suit has been found
+            if (!cardSelected) {
+                System.out.println("You don't have " + playSuit + " in your hands. Discard a card.");
+                System.out.println("Select a card to play: ");
+                choice = input.nextInt();
+
+                while (choice < 1 || choice > player.getHandSize()) {
+                    System.out.println("Enter a number between 1 to " + player.getHandSize());
+                    choice = input.nextInt();
+                }
+            }
         }
 
+        // If user is leading the trick
+        else {
+            System.out.println("No cards are in play. You may choose a suit for this trick");
+            System.out.println();
+            System.out.println("Select a card to play: ");
+            choice = input.nextInt();
 
+            while (choice < 1 || choice > player.getHandSize()) {
+                System.out.println("Enter a number between 1 to " + player.getHandSize());
+                choice = input.nextInt();
+            }
+        }
 
-
+        // Adds the card to the table ArrayList and removes from the hand
         table.add(player.hand.get(choice-1));
         System.out.println("You have played " + player.hand.get(choice-1));
         player.hand.remove(choice-1);
-
-
-
     }
+
 
 }
 

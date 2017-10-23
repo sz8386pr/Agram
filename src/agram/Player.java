@@ -7,6 +7,7 @@ public class Player {
     String name;
     Deck deck = new Deck();
     ArrayList<Card> hand;
+    Boolean trickWinner;
 
     private static int index = 0;
 
@@ -20,7 +21,9 @@ public class Player {
 
     public int getHandSize() { return hand.size(); }
 
-    public int getValue() { return hand.get(0).getValue();}
+    public int getValue(int index) { return hand.get(index).getValue();}
+
+    public String getSuit(int index) { return hand.get(index).getSuit();}
 
     public Player(String name) {
         this.name = name;
