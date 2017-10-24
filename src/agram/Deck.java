@@ -45,8 +45,9 @@ public class Deck {
     // Relies the random distribution of the cards on the Deck method's shuffling
     public Card addCard() {
 
-        index++;
-        return cards.get(index);
+        Card newCard = cards.get(0);
+        cards.remove(0);
+        return newCard;
 
 
     }

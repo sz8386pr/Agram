@@ -4,12 +4,16 @@ import java.util.ArrayList;
 
 public class Player {
 
-    String name;
+    private String name;
     Deck deck = new Deck();
     ArrayList<Card> hand;
-    Boolean trickWinner;
+
+
 
     private static int index = 0;
+
+
+    public static int getIndex() { return index; }
 
     public String getName() { return name; }
 

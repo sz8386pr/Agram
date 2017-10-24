@@ -20,11 +20,12 @@ public class Card {
 
     }
 
+    // Modification from https://github.com/minneapolis-edu/Fish/blob/master/src/main/java/gofish/Card.java
     public int compareTo(Card otherCard) {
 
         int thisIndex = this.value;
         int otherIndex = otherCard.value;
-        return thisIndex - otherIndex;
+        return otherIndex - thisIndex ;
     }
 
     // Reference from https://github.com/minneapolis-edu/Fish/blob/master/src/main/java/gofish/Card.java
