@@ -63,7 +63,7 @@ public class Agram {
                     PCTurn(playerNum);
                 }
             }
-            System.out.println("Trick #" + trick + "'s Winner is " + players.get(trickWinner).getName() + "!!!\n");
+            System.out.println("\nTrick #" + trick + "'s Winner is " + players.get(trickWinner).getName() + "!!!\n");
             trick++;
             if (trick > 6) {
                 gameOver = true;
@@ -126,6 +126,8 @@ public class Agram {
          // Move the winner of the previous trick into the front, so the winner gets to start the next trick
          playOrder.remove(trickWinner);
          playOrder.add(0, trickWinner);
+
+         System.out.println("\nTrick #" + trick);
     }
 
     private void playerTurn(){
@@ -145,7 +147,7 @@ public class Agram {
         player = players.get(0);
         int choice = 0;
 
-        System.out.println("\nTrick #" + trick);
+
 
         player.playerHand();
         System.out.println();// Player hand status
@@ -172,12 +174,13 @@ public class Agram {
                     while (choice < 1 || choice > player.getHandSize() || !player.hand.get(choice).getSuit().equals(playSuit)) {
                         if (!player.hand.get(choice).getSuit().equals(playSuit)) {
                             System.out.println("You have " + playSuit + " in your hands. You must play " + playSuit + " cards.");
+                            choice = input.nextInt();
                         } else {
                             System.out.println("Enter a number between 1 to " + player.getHandSize());
+                            choice = input.nextInt();
                         }
 
                     }
-                    choice = input.nextInt();
                     // 1.1.1 Add the card to the table if it has a greater value than the one on the table, else
                     // 1.1.2 just remove from the hand and keep the strongest card on the table ArrayList
                     if (player.hand.get(x).compareTo(table.get(trick-1)) < 0) {
@@ -260,6 +263,7 @@ public class Agram {
                 if (handSuit.equals(playSuit)) {
                     int playValue = table.get(trick - 1).getValue();
                     int lowestCardIndex = 0;
+                    int lowestCardValue = 11;
 
                     // Try to find if there is a higher value card than the playing card with the same suit in the hand
                     for (int x = 0; x < player.getHandSize(); x++) {
@@ -278,8 +282,6 @@ public class Agram {
                         }
 
                         // 1.1.2 if fails, play the lowest value card
-                        int lowestCardValue = 11;
-
                         if (cardValue < playValue && cardSuit.equals(playSuit) && cardValue < lowestCardValue) {
                             lowestCardValue = cardValue;
                             lowestCardIndex = x;
@@ -288,17 +290,17 @@ public class Agram {
                     System.out.println(player.getName() + " has played " + player.hand.get(lowestCardIndex));
                     player.hand.remove(lowestCardIndex);
                     cardSelected = true;
+                    return;
 
                 }
             }
 
             //1.2 A card is already in play within a trick, but user doesn't have any matching suit as the card in play.
             int lowestCardIndex = 0;
+            int lowestCardValue = 11;
 
             for (int x = 0; x < player.getHandSize(); x++) {
                 int cardValue = player.hand.get(x).getValue();
-
-                int lowestCardValue = 11;
 
                 if (cardValue < lowestCardValue) {
                     lowestCardValue = cardValue;
