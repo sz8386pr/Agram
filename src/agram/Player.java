@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Player {
 
     private String name;
-    Deck deck = new Deck();
     ArrayList<Card> hand;
 
 
@@ -32,10 +31,6 @@ public class Player {
     public Player(String name) {
         this.name = name;
         hand = new ArrayList<>();
-    }
-
-    public void addCard() {
-        hand.add(deck.addCard());
     }
 
     public String addPC() {

@@ -39,8 +39,8 @@ public class Agram {
     ArrayList<Integer> playOrder;
 
     Player player;
-    Deck deck;
-    Card cards;
+    Deck deck = new Deck();
+ //   Card cards;
     Boolean gameOver = false;
     int trick = 1;
     int trickWinner;
@@ -69,6 +69,7 @@ public class Agram {
                 gameOver = true;
             }
         }
+        System.out.println("Congratulations!!! " + players.get(trickWinner).getName() + " has won the Game!!!");
 
 
        /*
@@ -107,7 +108,7 @@ public class Agram {
             for (Player p: players) {
                 player = p;
                 for (int inner3 = 0; inner3 < 3; inner3++){
-                    player.addCard();
+                    player.hand.add(deck.newCard());
                 }
             }
         }
@@ -174,9 +175,9 @@ public class Agram {
                         } else {
                             System.out.println("Enter a number between 1 to " + player.getHandSize());
                         }
-                        choice = input.nextInt();
-                    }
 
+                    }
+                    choice = input.nextInt();
                     // 1.1.1 Add the card to the table if it has a greater value than the one on the table, else
                     // 1.1.2 just remove from the hand and keep the strongest card on the table ArrayList
                     if (player.hand.get(x).compareTo(table.get(trick-1)) < 0) {

@@ -2,6 +2,7 @@ package agram;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class Deck {
 
@@ -42,11 +43,13 @@ public class Deck {
         }
     }
 
-    // Relies the random distribution of the cards on the Deck method's shuffling
-    public Card addCard() {
+    // Shuffled while creating the deck and additional shuffling/randomizing while distributing the card
+    public Card newCard() {
 
-        Card newCard = cards.get(0);
-        cards.remove(0);
+        Random rn = new Random();
+        int randomNum =  rn.nextInt(cards.size());
+        Card newCard = cards.get(randomNum);
+        cards.remove(randomNum);
         return newCard;
 
 
