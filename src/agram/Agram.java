@@ -268,13 +268,13 @@ public class Agram {
 
                         // 1.1.1 If found a stronger card with the same suit as the play card,
                         //          replace the current table with the new card
-                        if (cardValue > playValue && cardSuit.equals(playSuit) && !cardSelected) {
+                        if (cardValue > playValue && cardSuit.equals(playSuit)) {
                             table.set(trick - 1, player.hand.get(x));
                             trickWinner = playerNum; // Sets the trickWinner as user
                             System.out.println(player.getName() + " has played " + player.hand.get(x));
                             player.hand.remove(x);
                             cardSelected = true;
-                            break;
+                            return;
                         }
 
                         // 1.1.2 if fails, play the lowest value card
@@ -284,39 +284,37 @@ public class Agram {
                             lowestCardValue = cardValue;
                             lowestCardIndex = x;
                         }
-
                     }
-                    if (!cardSelected) {
-                        System.out.println(player.getName() + " has played " + player.hand.get(lowestCardIndex));
-                        player.hand.remove(lowestCardIndex);
-                        cardSelected = true;
-                        break;
-                    }
-                }
-                //1.2 A card is already in play within a trick, but user doesn't have any matching suit as the card in play.
-                else {
-                    int lowestCardIndex = 0;
+                    System.out.println(player.getName() + " has played " + player.hand.get(lowestCardIndex));
+                    player.hand.remove(lowestCardIndex);
+                    cardSelected = true;
 
-                    for (int x = 0; x < player.getHandSize(); x++) {
-                        int cardValue = player.hand.get(x).getValue();
-
-                        int lowestCardValue = 11;
-
-                        if (cardValue < lowestCardValue) {
-                            lowestCardValue = cardValue;
-                            lowestCardIndex = x;
-                        }
-                    }
-                    if (!cardSelected) {
-                        System.out.println(player.getName() + " has played " + player.hand.get(lowestCardIndex));
-                        player.hand.remove(lowestCardIndex);
-                        cardSelected = true;
-                        break;
-
-                    }
                 }
             }
+
+            //1.2 A card is already in play within a trick, but user doesn't have any matching suit as the card in play.
+            int lowestCardIndex = 0;
+
+            for (int x = 0; x < player.getHandSize(); x++) {
+                int cardValue = player.hand.get(x).getValue();
+
+                int lowestCardValue = 11;
+
+                if (cardValue < lowestCardValue) {
+                    lowestCardValue = cardValue;
+                    lowestCardIndex = x;
+                }
+            }
+
+            if (!cardSelected) {
+                System.out.println(player.getName() + " has played " + player.hand.get(lowestCardIndex));
+                player.hand.remove(lowestCardIndex);
+                       cardSelected = true;
+            }
+
+
         }
+
 
         // 2 User is leading the trick, PC will choose one card randomly
         else {
